@@ -101,28 +101,15 @@ static uint8 simpleBLEBroadcaster_TaskID;   // Task ID for internal task/event p
 static uint8 scanRspData[] =
 {
   // complete name
-  0x15,   // length of this data
+  0x08,   // length of this data
   GAP_ADTYPE_LOCAL_NAME_COMPLETE,
-  0x53,   // 'S'
-  0x69,   // 'i'
-  0x6d,   // 'm'
-  0x70,   // 'p'
-  0x6c,   // 'l'
-  0x65,   // 'e'
-  0x42,   // 'B'
-  0x4c,   // 'L'
-  0x45,   // 'E'
-  0x42,   // 'B'
-  0x72,   // 'r'
-  0x6f,   // 'o'
-  0x61,   // 'a'
   0x64,   // 'd'
-  0x63,   // 'c'
-  0x61,   // 'a'
-  0x73,   // 's'
-  0x74,   // 't'
+  0x42,   // 'B'
+  0x2E,   // '.'
+  0x42,   // 'B'
   0x65,   // 'e'
-  0x72,   // 'r'
+  0x61,   // 'a'
+  0x63,   // 'c'
 
   // Tx power level
   0x02,   // length of this data
@@ -134,19 +121,27 @@ static uint8 scanRspData[] =
 // best kept short to conserve power while advertisting)
 static uint8 advertData[] = 
 { 
-  // Flags; this sets the device to use limited discoverable
-  // mode (advertises for 30 seconds at a time) instead of general
-  // discoverable mode (advertises indefinitely)
-  0x02,   // length of this data
-  GAP_ADTYPE_FLAGS,
-  GAP_ADTYPE_FLAGS_BREDR_NOT_SUPPORTED,
-
-  // three-byte broadcast of the data "1 2 3"
-  0x04,   // length of this data including the data type byte
-  GAP_ADTYPE_MANUFACTURER_SPECIFIC,      // manufacturer specific advertisement data type
-  1,
-  2,
-  3
+ // 25 byte ibeacon advertising data
+  // Preamble: 0x4C000215
+  // UUID: E37B185F-526E-B949-9728-A6B39F209C98
+  // Major: 1 (0x0001)
+  // Minor: 1 (0x0001)
+  // Measured Power: -64 (0xC0)
+  0x1A, // length of this data including the data type byte
+  GAP_ADTYPE_MANUFACTURER_SPECIFIC, // manufacturer specific advertisement data type
+  0x4C,0x00,0x02,0x15,
+  // UUID
+  0xE3,0x7B,0x18,0x5F,
+  0x52,0x6E,
+  0xB9,0x49,
+  0x97,0x28,
+  0xA6,0xB3,0x9F,0x20,0x9C,0x98,
+  // Major
+  0x00,0x01,
+  // Minor
+  0x00,0x02,
+  // Measured Power
+  0xC0
 };
 
 /*********************************************************************
